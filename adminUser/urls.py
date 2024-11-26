@@ -1,8 +1,8 @@
 from django.urls import path
-from .views import * 
+from .view import auth,dashboard
 
 
 urlpatterns = [
-    path('',admin_login,name='admin_login'),
-    path('dashboard/',dashboard,name='dashboard')
+    path('',auth.admin_login,name='admin_login'),
+    path('dashboard/',dashboard.dashboard,name='dashboard')
 ]

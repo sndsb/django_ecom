@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import render,redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate,login
-from django.contrib.auth.decorators import login_required,user_passes_test
+from django.contrib.auth.decorators import user_passes_test
 
 
 # Create your views here.
@@ -41,6 +41,3 @@ def admin_login(request):
     else:
       return render(request,'auth/login.html',{})
   
-@login_required
-def dashboard(request):
-    return render(request,'dashboard/index.html',{})
