@@ -38,6 +38,11 @@
 <link href="{% static 'assets/switcher/demo.css' %}" rel="stylesheet">
 <!--Daterangepicker css-->
 <link href="{% static 'assets/plugins/bootstrap-daterangepicker/daterangepicker.css' %}" rel="stylesheet" />
+<link
+href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
+rel="stylesheet"
+/>
+
 	</head>
 
 	<body class="light-mode">
@@ -242,6 +247,18 @@
 <!-- Switcher js -->
 <script src="{% static 'assets/switcher/js/switcher.js' %}"></script>
 	
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+{% if messages %}
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      {% for message in messages %}
+      toastr.{{ message.tags }}('{{ message }}');
+      {% endfor %}
+  });
+</script>
+{% endif %}
+
 	</body>
 
 <!-- Mirrored from laravel.spruko.com/dashtic/Horizontal-Light-ltr/index3 by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 06 May 2024 12:38:03 GMT -->

@@ -3,7 +3,7 @@ from adminUser.models import *
 from django.contrib.auth.models import User
 from django.shortcuts import render,redirect
 from django.contrib import messages
-from django.contrib.auth import authenticate,login
+from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import user_passes_test
 
 
@@ -41,3 +41,10 @@ def admin_login(request):
     else:
       return render(request,'auth/login.html',{})
   
+
+def logout_admin(request):
+    
+    logout(request)
+    messages.success(request,'You have been logged out successfully ')
+    return redirect('admin_login')
+        

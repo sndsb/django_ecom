@@ -4,5 +4,6 @@ from .view import auth,dashboard
 
 urlpatterns = [
     path('',auth.admin_login,name='admin_login'),
-    path('dashboard/',dashboard.dashboard,name='dashboard')
+    path('dashboard/',dashboard.dashboard,name='dashboard'),
+    path('logout/',auth.logout_admin,name='logout')
 ]
