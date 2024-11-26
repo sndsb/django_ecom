@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
-
+import os
 import pymysql
 pymysql.install_as_MySQLdb()
 
@@ -81,11 +81,11 @@ WSGI_APPLICATION = 'ecom_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',  # Use MySQL backend
-        'NAME': 'walkers1_lenssathi',          # Replace with your database name
+        'NAME': 'walkers1_ecom',          # Replace with your database name
         'USER': 'walkers1_user',         # Replace with your MySQL username
         'PASSWORD': 'NepaL1234%',     # Replace with your MySQL password
         'HOST': 'walkershive.com',                   # Set to 'localhost' or your MySQL server IP
-        'PORT': '3306',                        # MySQL default port
+        'PORT': '3306',                       # MySQL default port
     }
 }
 
@@ -124,6 +124,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
+
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_PATH = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
