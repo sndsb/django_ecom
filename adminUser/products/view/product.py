@@ -19,16 +19,17 @@ def list(request):
     columnIndex_arr = request.GET.getlist('order[]')
     columnName_arr = request.GET.getlist('columns[]')
     order_arr = request.GET.getlist('order[]')
-    search_arr = request.GET.get('search', {})
+    # search_arr = request.GET.get('search', {})
 
     columnIndex = int(columnIndex_arr[0]['column']) if columnIndex_arr else 0
     columnName = columnName_arr[columnIndex]['data'] if columnName_arr else 'id'
     columnSortOrder = order_arr[0]['dir'] if order_arr else 'asc'
-    searchValue = search_arr.get('value', '')
+    # searchValue = search_arr.get('value', '')
+    searchValue = request.GET['search[value]']
 
     # Build the query with search filters
     query = Product.objects.all()
-
+    print('search value:'+searchValue)
     if searchValue:
         query = query.filter(
             Q(name__icontains=searchValue) |
