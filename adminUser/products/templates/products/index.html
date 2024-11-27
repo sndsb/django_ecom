@@ -1,1 +1,122 @@
-hello product page
+{% extends 'base.html' %} {% block content %}
+
+<!--Page header-->
+<div class="page-header">
+  <div class="page-leftheader">
+    <h4 class="page-title">Data Tables</h4>
+  </div>
+  <div class="page-rightheader ml-auto d-lg-flex d-none">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="#" class="d-flex"
+          ><svg
+            class="svg-icon"
+            xmlns="http://www.w3.org/2000/svg"
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+          >
+            <path d="M0 0h24v24H0V0z" fill="none" />
+            <path
+              d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3zm5 15h-2v-6H9v6H7v-7.81l5-4.5 5 4.5V18z"
+            />
+            <path d="M7 10.19V18h2v-6h6v6h2v-7.81l-5-4.5z" opacity=".3" /></svg
+          ><span class="breadcrumb-icon"> Home</span></a
+        >
+      </li>
+      <li class="breadcrumb-item"><a href="#">Tables</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Data Tables</li>
+    </ol>
+  </div>
+</div>
+<!--End Page header-->
+<!-- Row -->
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">Basic DataTable</div>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered text-nowrap" id="datatable">
+            <thead>
+              <tr>
+                <th class="wd-15p border-bottom-0"> S.N.</th>
+                <th class="wd-15p border-bottom-0"> name</th>
+                <th class="wd-15p border-bottom-0">Slug</th>
+                <th class="wd-20p border-bottom-0">Sku</th>
+                <th class="wd-25p border-bottom-0">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+             
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /Row -->
+{% endblock content %}
+
+
+{% block script %}
+
+<script>
+    $(function() {
+
+        debugger
+        $('#datatable').DataTable({
+            dom: 'lfrtip',
+            destroy: true,
+            processing: true,
+            language: {
+                processing: '<span style="color:white;">Processing...</span>'
+            },
+            serverSide: true,
+            ajax: {
+                url: "{% url 'product.list' %}",
+                type: "GET",
+                data: function(postData) {
+
+                }
+            },
+            scrollY: "50vh",
+            scrollX: true,
+            lengthMenu: [
+                [25, 20, -1],
+                [10, 20, "All"]
+            ],
+            order: [
+                [0, "ASC"]
+            ],
+            columns: [{
+                    data: 'id'
+                },
+                {
+                    data: 'name'
+                },
+                {
+                    data: 'slug'
+                },
+                {
+                    data: 'sku'
+                },
+                {
+                    data: 'action'
+                },
+                
+
+            ],
+            columnDefs: [{
+                "orderable": false,
+                "targets": [4]
+            }, ],
+        });
+    })
+</script>
+    
+{% endblock script %}
+    
