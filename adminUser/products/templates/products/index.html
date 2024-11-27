@@ -35,9 +35,16 @@
   <div class="col-12">
     <div class="card">
       <div class="card-header">
-        <div class="card-title">Basic DataTable</div>
+        <div class="card-title">Product List</div>
+        
       </div>
       <div class="card-body">
+        <div class="row text-right">
+          
+        <div class="col mb-4">
+            <a href="{% url 'product.add' %}" class="btn btn-primary"><i class="fe fe-plus"></i> Add New Product</a>
+        </div>
+        </div>
         <div class="table-responsive">
           <table class="table table-bordered text-nowrap" id="datatable" width=100%>
             <thead>

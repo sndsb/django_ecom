@@ -85,3 +85,22 @@ def list(request):
     }
 
     return JsonResponse(response)
+
+def add(request):
+    return render(request,'products/add.html',{})
+
+def save(request):
+        name = request.POST.get('name')
+        description = request.POST.get('description')
+        sku = request.POST.get('sku')
+        image = request.FILES.get('image')
+
+        # Create the Product instance
+        product = Product.objects.create(
+            name=name,
+            description=description,
+            sku=sku,
+            image=image
+        )
+
+        return JsonResponse({'success': True})

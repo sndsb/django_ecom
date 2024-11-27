@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="page-header">
+    <div class="page-leftheader">
+        <h4 class="page-title">Add Product</h4>
+    </div>
+    <div class="page-rightheader ml-auto d-lg-flex d-none">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#" class="d-flex"><svg class="svg-icon" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3zm5 15h-2v-6H9v6H7v-7.81l5-4.5 5 4.5V18z"/><path d="M7 10.19V18h2v-6h6v6h2v-7.81l-5-4.5z" opacity=".3"/></svg><span class="breadcrumb-icon"> Home</span></a></li>
+            <li class="breadcrumb-item"><a href="#">Pages</a></li>
+            <li class="breadcrumb-item"><a href="#">Invoice</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Add Invoice</li>
+        </ol>
+    </div>
+</div>
+<!--End Page header-->
+                        <!-- Row-->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">Add Product</div>
+            </div>
+            <form action="{% url 'product.save' %}" method="POST" id="form_submit">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <label class="form-label">Name</label>
+                                <input class="form-control" name="name" placeholder="Invoice title" value="">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <label class="form-label">Description</label>
+                                <textarea class="form-control" name="description" rows="4" placeholder="Description"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <label class="form-label">Sku</label>
+                                <input class="form-control" name="sku" placeholder="Payment Number" value="">
+                            </div>
+                        </div>
+                      
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <label class="form-label">Image</label>
+                                <input type="file" class="form-control" name="image" />
+                              
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               
+            </div>
+            <div class="card-footer">
+                <div class="row">
+                    <div class="col">
+                        <button class="btn btn-success" type="submit"><i class="fe fe-plus"></i> Save</button>
+                        <a class="btn btn-light" href="{% url 'product.index' %}">Cancel</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+    
+
+{% block script %}
+    <script>
+        $(function(){
+            debugger
+            $('#form_submit').on('submit',function(e){
+                
+                e.preventDefault()
+
+                var formData = new FormData(this); 
+
+                $.ajax({
+                    url: "{% url 'product.save' %}", 
+                    type: "POST",
+                    data: formData,
+                    contentType: false,
+                    processData: false, 
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}' 
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                           console.log('okk')
+                        } else {
+                           
+                            alert('Error: ' + response.error);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                     
+                        alert("An error occurred: " + error);
+                    }
+                });
+            })
+        })
+    </script>
+{% endblock script %}
+    
