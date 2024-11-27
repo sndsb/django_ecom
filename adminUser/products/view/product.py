@@ -35,6 +35,7 @@ def list(request):
             Q(slug__icontains=searchValue) |
             Q(sku__icontains=searchValue)
         )
+        
 
     # Get total count (before applying pagination)
     totalRecords = query.count()
