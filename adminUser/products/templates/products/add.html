@@ -29,8 +29,8 @@
                     <div class="col-12">
                         <div class="form-group row">
                             <div class="col-md-12">
-                                <label class="form-label">Name</label>
-                                <input class="form-control" name="name" placeholder="Invoice title" value="">
+                                <label class="form-label required-label">Name</label>
+                                <input class="form-control" name="name" placeholder="Name" value="" required>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -42,7 +42,7 @@
                         <div class="form-group row">
                             <div class="col-md-12">
                                 <label class="form-label">Sku</label>
-                                <input class="form-control" name="sku" placeholder="Payment Number" value="">
+                                <input class="form-control" name="sku" placeholder="Sku" value="" required>
                             </div>
                         </div>
                       
@@ -75,11 +75,11 @@
 {% block script %}
     <script>
         $(function(){
-            debugger
+            
             $('#form_submit').on('submit',function(e){
                 
                 e.preventDefault()
-
+                let $form = $(this);
                 var formData = new FormData(this); 
 
                 $.ajax({
@@ -92,11 +92,10 @@
                         'X-CSRFToken': '{{ csrf_token }}' 
                     },
                     success: function(response) {
-                        if (response.success) {
-                           console.log('okk')
+                        if (response.response) {
+                            location.replace('{% url 'product.index' %}')
                         } else {
-                           
-                            alert('Error: ' + response.error);
+                            displayErrors($form, response.errors);
                         }
                     },
                     error: function(xhr, status, error) {
@@ -106,6 +105,21 @@
                 });
             })
         })
+
+        function displayErrors($form, errors) {
+            $.each(errors, function(field, messages) {
+                let $field = $form.find('[name="' + field + '"]');
+
+                $field.removeClass('is-invalid');
+                $field.siblings('.error-message').remove(); 
+
+                if ($field.length) {
+                    $field.addClass('is-invalid'); 
+                    $field.after('<div class="error-message text-danger small">' + messages.join('<br>') + '</div>');
+                } 
+            });
+        }
+
     </script>
 {% endblock script %}
     

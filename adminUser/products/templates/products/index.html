@@ -53,6 +53,7 @@
                 <th class="wd-15p border-bottom-0"> name</th>
                 <th class="wd-15p border-bottom-0">Slug</th>
                 <th class="wd-20p border-bottom-0">Sku</th>
+                <th class="wd-20p border-bottom-0">Image</th>
                 <th class="wd-25p border-bottom-0">Action</th>
               </tr>
             </thead>
@@ -111,6 +112,9 @@
                     data: 'sku'
                 },
                 {
+                  data: 'image'
+              },
+                {
                     data: 'action'
                 },
                 
@@ -118,7 +122,7 @@
             ],
             columnDefs: [{
                 "orderable": false,
-                "targets": [4]
+                "targets": [5]
             }, ],
         });
     })

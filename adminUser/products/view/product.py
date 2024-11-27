@@ -3,6 +3,10 @@ from django.contrib import messages
 from adminUser.products.model.product import Product
 from django.http import JsonResponse
 from django.db.models import Q
+from django.core.exceptions import ValidationError
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
+from django.db import IntegrityError
 
 
 def index(request):
@@ -29,7 +33,7 @@ def list(request):
 
     # Build the query with search filters
     query = Product.objects.all()
-    print('search value:'+searchValue)
+
     if searchValue:
         query = query.filter(
             Q(name__icontains=searchValue) |
@@ -66,12 +70,14 @@ def list(request):
                 </div>
             </div>
         '''
+        image_tag = f"<img src='{record.image.url}' alt='{record.name}' style='width: 50px; height: 50px;' />" if record.image else "No Image"
 
         data_arr.append({
             "id": i,
             "name": f"<a class='text-info' href='#'>{record.name}</a>",
             "slug": record.slug,
             "sku": record.sku,
+            'image':image_tag,
             "action": actionBtn
         })
         i += 1
@@ -89,18 +95,58 @@ def list(request):
 def add(request):
     return render(request,'products/add.html',{})
 
+MAX_IMAGE_SIZE_MB = 3 
+
+@login_required
+@require_POST
 def save(request):
+    
+    try:
         name = request.POST.get('name')
         description = request.POST.get('description')
         sku = request.POST.get('sku')
         image = request.FILES.get('image')
-
-        # Create the Product instance
-        product = Product.objects.create(
+        
+         # Image size validation
+      
+        if image :
+          
+            if image.size > MAX_IMAGE_SIZE_MB * 1024 * 1024:
+               
+                raise ValidationError({'image': f"Image size should not exceed {MAX_IMAGE_SIZE_MB} MB."})
+             
+        else:
+            pass
+            
+        
+        product = Product(
             name=name,
             description=description,
             sku=sku,
             image=image
         )
 
-        return JsonResponse({'success': True})
+        product.full_clean()  # This will raise ValidationError if any field fails validation
+
+        product.save()
+
+        response = {
+            'response': True,
+            'msg': "Product Added Successfully",
+            'result': "",
+        }
+
+    except IntegrityError:
+      
+        raise ValidationError({'sku': "SKU should be unique."})
+
+    except ValidationError as error:
+     
+        response = {
+            'response': False,
+            'msg': "Validation error occurred.",
+            'result' : "",
+            'errors': error.message_dict,  
+        }
+
+    return JsonResponse(response)
