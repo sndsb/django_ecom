@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.contrib import messages
-from adminUser.products.model.product import Product
+from adminUser.products.model.products import Product,Category,Attribute
 from django.http import JsonResponse
 from django.db.models import Q
 from django.core.exceptions import ValidationError
@@ -10,10 +10,11 @@ from django.db import IntegrityError
 
 
 def index(request):
+
     return render(request,'products/index.html',{})
 
 def list(request):
-    
+
     # Get request parameters
     draw = request.GET.get('draw')
     start = int(request.GET.get('start', 0))
@@ -93,18 +94,22 @@ def list(request):
     return JsonResponse(response)
 
 def add(request):
-    return render(request,'products/add.html',{})
+    categories = Category.objects.all()
+    attributes = Attribute.objects.all()
+    return render(request,'products/add.html',{'categories':categories,'attributes':attributes})
 
-MAX_IMAGE_SIZE_MB = 3 
+MAX_IMAGE_SIZE_MB = 3
 
 @login_required
 @require_POST
 def save(request):
+    pass
     
     try:
         name = request.POST.get('name')
         description = request.POST.get('description')
         sku = request.POST.get('sku')
+        category_id = request.POST.get('category_id')
         image = request.FILES.get('image')
         
          # Image size validation
@@ -123,6 +128,7 @@ def save(request):
             name=name,
             description=description,
             sku=sku,
+            category_id=category_id,
             image=image
         )
 
@@ -146,7 +152,7 @@ def save(request):
             'response': False,
             'msg': "Validation error occurred.",
             'result' : "",
-            'errors': error.message_dict,  
+            'errors': error.message_dict,
         }
 
     return JsonResponse(response)

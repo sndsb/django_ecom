@@ -10,6 +10,8 @@
 <meta content="Dashtic - Bootstrap Webapp Responsive Dashboard Simple Admin Panel Premium HTML5 Template" name="description">
 <meta content="Spruko Technologies Private Limited" name="author">
 <meta name="keywords" content="Admin, Admin Template, Dashboard, Responsive, Admin Dashboard, Bootstrap, Bootstrap 4, Clean, Backend, Jquery, Modern, Web App, Admin Panel, Ui, Premium Admin Templates, Flat, Admin Theme, Ui Kit, Bootstrap Admin, Responsive Admin, Application, Template, Admin Themes, Dashboard Template"/>
+<meta name="csrf-token" content="{{ csrf_token }}">
+
 <!-- Title -->
 <title>
 {% block title %}
@@ -53,6 +55,8 @@ rel="stylesheet"
 <link href="{% static 'assets/plugins/datatable/responsive.bootstrap4.min.css' %}" rel="stylesheet" />
 <!-- Slect2 css -->
 <link href="{% static 'assets/plugins/select2/select2.min.css' %}" rel="stylesheet" />
+
+<link href="{% static  'assets/plugins/select2/select2.min.css' %}" rel="stylesheet" />
 
 	</head>
 
@@ -254,6 +258,7 @@ rel="stylesheet"
 <script src="{% static 'assets/js/index3.js' %}"></script>
 <!-- Custom js-->
 <script src="{% static 'assets/js/custom.js' %}"></script>
+<script src="{% static 'assets/js/ajax.js' %}"></script>
 
 <!-- Switcher js -->
 <script src="{% static 'assets/switcher/js/switcher.js' %}"></script>
@@ -276,7 +281,10 @@ rel="stylesheet"
 <script src="{% static 'assets/js/datatables.js' %}"></script>
 <!-- Select2 js -->
 <script src="{% static 'assets/plugins/select2/select2.full.min.js' %}"></script>
-
+        <!--Select2 js -->
+<script src="{%  static 'assets/plugins/select2/select2.full.min.js' %}"></script>
+<script src="{%  static 'assets/js/select2.js' %}"></script>
+        
 {% if messages %}
 <script>
   document.addEventListener('DOMContentLoaded', function() {
