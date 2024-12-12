@@ -127,6 +127,7 @@
     <script>
         $(function () {
 
+            //togggle checkbox of attaribute
             $('#attributeCheckbox').on('change', function () {
                 if ($(this).is(':checked')) {
 
@@ -139,7 +140,7 @@
                                             <div class="form-group">
                                                 <label class="form-label"> Attribute <span
                                                         class="text-red">*</span></label>
-                                                <select class="form-control select2-show-search" name="attribute_id"
+                                                <select class="form-control select2-show-search" name="attribute_id[]"
                                                         required data-placeholder="search category">
                                                     <option value="" selected disabled>select attribute</option>
                                                     {% for category in categories %}
@@ -151,25 +152,28 @@
                                         <div class="col-md-3">
                                             <label class="form-label required-label">Attribute Value<span
                                                     class="text-red">*</span></label>
-                                            <input class="form-control" name="attribute_value"
+                                            <input class="form-control" name="attribute_value[]"
                                                    placeholder="Attribute Value" value="" required>
                                         </div>
 
                                         <div class="col-md-3">
                                             <label class="form-label required-label"> Price<span
                                                     class="text-red">*</span></label>
-                                            <input class="form-control" name="attr_price" placeholder="Attribute Value"
+                                            <input class="form-control" name="attr_price[]" placeholder="Attribute Value"
                                                    value="" required>
                                         </div>
 
                                         <div class="col-md-3">
                                             <label class="form-label required-label"> Stock<span
                                                     class="text-red">*</span></label>
-                                            <input class="form-control" name="attr_stock" placeholder="Attribute Stock"
+                                            <input class="form-control" name="attr_stock[]" placeholder="Attribute Stock"
                                                    value="" required>
                                         </div>
-
+                                         <div class="col-md-3 d-flex">
+                                             <button class="btn-sm btn-info m-1 add" type="button"><i class="fa fa-plus"></i></button>
+                                        </div>
                                     </div>
+
                      `)
                 } else {
                       $('#with_attr_div').html('')
@@ -194,6 +198,59 @@
                 }
             });
 
+            //append  child data in attribute
+            $(document).on('click','#with_attr_div  .add',function (){
+                $('#with_attr_div').append(`
+                     <div class="form-group row">
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label class="form-label"> Attribute <span
+                                                        class="text-red">*</span></label>
+                                                <select class="form-control select2-show-search" name="attribute_id[]"
+                                                        required data-placeholder="search category">
+                                                    <option value="" selected disabled>select attribute</option>
+                                                    {% for category in categories %}
+                                                        <option>{{ category.name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="form-label required-label">Attribute Value<span
+                                                    class="text-red">*</span></label>
+                                            <input class="form-control" name="attribute_value[]"
+                                                   placeholder="Attribute Value" value="" required>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label class="form-label required-label"> Price<span
+                                                    class="text-red">*</span></label>
+                                            <input class="form-control" name="attr_price[]" placeholder="Attribute Value"
+                                                   value="" required>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label class="form-label required-label"> Stock<span
+                                                    class="text-red">*</span></label>
+                                            <input class="form-control" name="attr_stock[]" placeholder="Attribute Stock"
+                                                   value="" required>
+                                        </div>
+                                         <div class="col-md-3 d-flex">
+                                             <button class="btn-sm btn-info m-1 add" type="button"><i class="fa fa-plus"></i></button>
+                                             <button class="btn-sm btn-danger m-1 remove" type="button"><i class="fa fa-minus"></i></button>
+                                        </div>
+                                    </div>
+
+                `)
+            })
+
+            //remove child data
+            $(document).on('click','#with_attr_div .remove',function (){
+                $(this).parent().parent().remove()
+            } )
+
+            //post data
             $('#form_submit').on('submit', function (e) {
 
                 e.preventDefault()

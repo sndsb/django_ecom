@@ -132,9 +132,10 @@ def save(request):
             image=image
         )
 
-        product.full_clean()  # This will raise ValidationError if any field fails validation
+        product.full_clean()
 
         product.save()
+
 
         response = {
             'response': True,
