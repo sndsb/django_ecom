@@ -147,14 +147,14 @@ def save(request):
         stock = request.POST.get('stock')
 
         if(price):
-            productattribute = ProductAttribute(
+            produWithoutAttribute = ProductAttribute(
                 product_id=product.id,
                 price=price,
                 stock=stock,
             )
-            productattribute.full_clean()
+            produWithoutAttribute.full_clean()
 
-            productattribute.save()
+            produWithoutAttribute.save()
         else:
             for i in range(len(attribute_ids)):
 
