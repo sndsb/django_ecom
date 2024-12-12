@@ -49,7 +49,7 @@
                                                     data-placeholder="search category">
                                                 <option value="" selected disabled>select category</option>
                                                 {% for category in categories %}
-                                                    <option>{{ category.name }}</option>
+                                                    <option value="{{  category.id }}">{{ category.name }}</option>
                                                 {% endfor %}
                                             </select>
                                         </div>
@@ -143,8 +143,8 @@
                                                 <select class="form-control select2-show-search" name="attribute_id[]"
                                                         required data-placeholder="search category">
                                                     <option value="" selected disabled>select attribute</option>
-                                                    {% for category in categories %}
-                                                        <option>{{ category.name }}</option>
+                                                    {% for attribute in attributes %}
+                                                        <option value="{{  attribute.id }}">{{ attribute.name }}</option>
                                                     {% endfor %}
                                                 </select>
                                             </div>
@@ -210,8 +210,8 @@
                                                 <select class="form-control select2-show-search" name="attribute_id[]"
                                                         required data-placeholder="search category">
                                                     <option value="" selected disabled>select attribute</option>
-                                                    {% for category in categories %}
-                                                        <option>{{ category.name }}</option>
+                                                    {% for attribute in attributes %}
+                                                        <option value="{{ attribute.id }}"> {{ attribute.name }}</option>
                                                     {% endfor %}
                                                 </select>
                                             </div>
@@ -269,44 +269,5 @@
 
     </script>
 
-    <template id="attribute_tempate">
-        <div class="form-group row">
-
-            <div class="col-md-3">
-                <div class="form-group">
-                    <label class="form-label"> Attribute <span
-                            class="text-red">*</span></label>
-                    <select class="form-control select2-show-search" name="attribute_id"
-                            required data-placeholder="search category">
-                        <option value="" selected disabled>select attribute</option>
-                        {% for category in categories %}
-                            <option>{{ category.name }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <label class="form-label required-label">Attribute Value<span
-                        class="text-red">*</span></label>
-                <input class="form-control" name="attribute_value"
-                       placeholder="Attribute Value" value="" required>
-            </div>
-
-            <div class="col-md-3">
-                <label class="form-label required-label"> Price<span
-                        class="text-red">*</span></label>
-                <input class="form-control" name="attr_price" placeholder="Attribute Value"
-                       value="" required>
-            </div>
-
-            <div class="col-md-3">
-                <label class="form-label required-label"> Stock<span
-                        class="text-red">*</span></label>
-                <input class="form-control" name="attr_stock" placeholder="Attribute Stock"
-                       value="" required>
-            </div>
-
-        </div>
-    </template>
 {% endblock script %}
     

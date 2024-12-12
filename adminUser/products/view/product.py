@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.contrib import messages
-from adminUser.products.model.products import Product,Category,Attribute
+from adminUser.products.model.products import Product, Category, Attribute, ProductAttribute
 from django.http import JsonResponse
 from django.db.models import Q
 from django.core.exceptions import ValidationError
@@ -113,7 +113,7 @@ def save(request):
         image = request.FILES.get('image')
         
          # Image size validation
-      
+        print('sku : ', sku)
         if image :
           
             if image.size > MAX_IMAGE_SIZE_MB * 1024 * 1024:
@@ -136,7 +136,42 @@ def save(request):
 
         product.save()
 
+       # Extract attribute data
+        attribute_ids = request.POST.getlist('attribute_id[]')
+        attribute_values = request.POST.getlist('attribute_value[]')
+        attribute_price = request.POST.getlist('attr_price[]')
+        attr_stocks = request.POST.getlist('attr_stock[]')
 
+        # extract non attribute data
+        price = request.POST.get('price')
+        stock = request.POST.get('stock')
+
+        if(price):
+            productattribute = ProductAttribute(
+                product_id=product.id,
+                price=price,
+                stock=stock,
+            )
+            productattribute.full_clean()
+
+            productattribute.save()
+        else:
+            for i in range(len(attribute_ids)):
+
+                productattribute = ProductAttribute(
+                    product_id=product.id,
+                    attribute_id=attribute_ids[i],
+                    attribute_value=attribute_values[i],
+                    price = attribute_price[i],
+                    stock=attr_stocks[i]
+                )
+
+                productattribute.full_clean()
+
+                productattribute.save()
+
+
+        
         response = {
             'response': True,
             'msg': "Product Added Successfully",
